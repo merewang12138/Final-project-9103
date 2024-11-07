@@ -7,7 +7,6 @@ let mainRadius = 120; // Radius of the main circle
   let startY = 100; // Starting y position to accommodate multiple rows
   let yStep = -20; // Prevents patterns from being built in a straight line vertically
   let xStep = 50; // Prevents patterns from being built in a straight line horizontally
-  let timeOffset = 0; // Offset for animated noise
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -31,29 +30,6 @@ function setup() {
 
     let pattern = new CirclePattern(x, y, mainRadius, hue, saturation, brightness, isZigzag);
     pattern.draw(); // Draw each circle pattern
-  }
-}
-
-function draw() {
-  background('teal');
-  timeOffset += 4; // Increment time to create movement
-
-  for (let i = 0; i < numCircles; i++) {
-    let row = floor(i / 49);
-    let col = i % 49;
-    let noiseX = noise(col * 2, row * 0.1, timeOffset); // Noise for x position
-    let noiseY = noise(col * 0.1 + 100, row * 0.1 + 100, timeOffset); // Noise for y position
-    let x = startX + col * spacingX - row * xStep + noiseX * 50; // Adjust x position
-    let y = startY + row * spacingY + col * yStep + noiseY * 50; // Adjust y position
-   
-    // Random HSB color influenced by noise
-    let hue = noise(col * 0.05, row * 0.05) * 360;
-    let saturation = noise(row * 0.05, col * 0.05 + 50) * 60 + 50;
-    let brightness = noise(col * 0.1, row * 0.1 + 100) * 20 + 80;
-    
-    let isZigzag = (i % 9 === 0);
-    let pattern = new CirclePattern(x, y, mainRadius, hue, saturation, brightness, isZigzag);
-    pattern.draw();
   }
 }
 
@@ -178,4 +154,3 @@ function windowResized() {
   background('teal');
   setup(); // Redraw circles when window is resized
 }
-
