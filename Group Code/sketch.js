@@ -45,7 +45,12 @@ function draw() {
     let noiseY = noise(col * 0.1 + 100, row * 0.1 + 100, timeOffset); // Noise for y position
     let x = startX + col * spacingX - row * xStep + noiseX * 50; // Adjust x position
     let y = startY + row * spacingY + col * yStep + noiseY * 50; // Adjust y position
-
+   
+    // Random HSB color influenced by noise
+    let hue = noise(col * 0.05, row * 0.05) * 360;
+    let saturation = noise(row * 0.05, col * 0.05 + 50) * 60 + 50;
+    let brightness = noise(col * 0.1, row * 0.1 + 100) * 20 + 80;
+    
     let isZigzag = (i % 9 === 0);
     let pattern = new CirclePattern(x, y, mainRadius, hue, saturation, brightness, isZigzag);
     pattern.draw();
